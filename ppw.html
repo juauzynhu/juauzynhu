@@ -9,7 +9,7 @@
         <link href="https://unpkg.com/survey-vue@1.9.13/survey.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
-        %%[ set @nps = RequestParameter('firstName') set @reason = RequestParameter('lastName') ]%%
+        %%[ set @nps = RequestParameter('satisfaction') set @reason = RequestParameter('reason') ]%%
         <div id="surveyContainer" style="display: inline-block; width: 100%;">
             <survey :survey="survey" />
         </div>
@@ -76,7 +76,7 @@
                 'c__nps', @firstName
                 endif
                 ]%%
-                alert(%%[@createSfRecord]%%);
+                alert('zz');
             });
             new Vue({ el: '#surveyContainer', data: { survey: survey } });
         </script>
