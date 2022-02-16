@@ -67,8 +67,17 @@ function sendDataToServer(survey) {
 }
 
 var survey = new Survey.Model(surveyJSON);
-survey.onComplete.add(function (sender){
-      alert(sender.data.reason);
+survey.onComplete.add(function (sender){  
+      
+  fetch('%%=CloudPagesURL(3532)=%%', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({a: 7, str: 'Some string: &=&'})
+}).then(res => res.json())
+  .then(res => console.log(res));
 });
 new Vue({ el: '#surveyContainer', data: { survey: survey } });
 
