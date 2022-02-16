@@ -9,6 +9,7 @@
         <link href="https://unpkg.com/survey-vue@1.9.13/survey.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
+        %%[ set @nps = RequestParameter('firstName') set @reason = RequestParameter('lastName') ]%%
         <div id="surveyContainer" style="display: inline-block; width: 100%;">
             <survey :survey="survey" />
         </div>
@@ -68,11 +69,13 @@
 
             var survey = new Survey.Model(surveyJSON);
             survey.onComplete.add(function (sender){
-              %%[set @createSfRecord = UpdateSingleSalesforceObject(
-                'Account', 3,
-                'FirstName', @firstName,
-                'LastName', @lastName,
-                'Email', @email)]%%
+              %%[
+              if RequestParameter("submitted") == "submitted" then
+              set @createSfRecord = UpdateSingleSalesforceObject(
+                'case', 3,
+                'c__nps', @firstName
+                endif
+                ]%%
                 alert(%%[@createSfRecord]%%);
             });
             new Vue({ el: '#surveyContainer', data: { survey: survey } });
