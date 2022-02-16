@@ -16,49 +16,7 @@
         <script type="text/javascript">
 Survey.StylesManager.applyTheme("orange");
 
-var surveyJSON = {
- "locale": "pt-br",
- "title": "Avaliação caso #%%=QueryParameter('c')=%% - PPW",
- "logoPosition": "right",
- "completedHtml": "<b>Agradecemos o seu feedback!</b>",
- "pages": [
-  {
-   "name": "page1",
-   "elements": [
-    {
-     "type": "rating",
-     "name": "satisfaction",
-     "startWithNewLine": false,
-     "title": "Quão satisfeito você ficou com a solução do caso #%%=QueryParameter('c')=%%?",
-     "titleLocation": "top",
-     "hideNumber": true,
-     "isRequired": true,
-     "rateMax": 10,
-     "minRateDescription": "Pouco satisfeito",
-     "maxRateDescription": "Muito satisfeito"
-    },
-    {
-     "type": "text",
-     "name": "reason",
-     "visibleIf": "{satisfaction} <= 7",
-     "title": "Qual a razão da escolha?",
-     "hideNumber": true,
-     "enableIf": "{satisfaction} <= 7",
-     "isRequired": true,
-     "placeHolder": "Insira aqui o motivo da nota escolhida"
-    }
-   ],
-   "questionTitleLocation": "top",
-   "navigationButtonsVisibility": "hide"
-  }
- ],
- "cookieName": "ppwnps",
- "showPrevButton": false,
- "showPageTitles": false,
- "showQuestionNumbers": "off",
- "questionTitlePattern": "numTitle",
- "questionsOnPageMode": "singlePage"
-}
+var surveyJSON = { surveyId: '7bda603f-bda7-44ed-8b8c-4a0e7fc74e45', surveyPostId: '2f6ecd5e-eda8-4f1c-ba7e-edda8177a3e2'}
 
 
 function sendDataToServer(survey) {
