@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NPS - PPW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://unpkg.com/survey-vue@1.9.13/survey.vue.min.js"></script>
+  <link href="https://unpkg.com/survey-vue@1.9.13/survey.css" type="text/css" rel="stylesheet" />
+  </head>
+<body>
+  <div id="surveyContainer" style="display:inline-block;width:100%;">
+            <survey :survey='survey'/>
+        </div>
+        <div id="surveyResult"></div>
+        <script type="text/javascript">
+Survey.StylesManager.applyTheme("orange");
+
+var surveyJSON = {
+ "locale": "pt-br",
+ "title": "Avaliação caso %%=QueryParameter('c')=%% - PPW",
+ "logoPosition": "right",
+ "completedHtml": "Obrigado!",
+ "pages": [
+  {
+   "name": "page1",
+   "elements": [
+    {
+     "type": "rating",
+     "name": "satisfaction",
+     "startWithNewLine": false,
+     "title": "Quão satisfeito você ficou com a solução do seu caso?",
+     "titleLocation": "top",
+     "hideNumber": true,
+     "isRequired": true,
+     "rateMax": 10,
+     "minRateDescription": "Pouco satisfeito",
+     "maxRateDescription": "Muito satisfeito"
+    },
+    {
+     "type": "text",
+     "name": "reason",
+     "visibleIf": "{satisfaction} <= 7",
+     "title": "Qual a razão da escolha?",
+     "hideNumber": true,
+     "enableIf": "{satisfaction} <= 7",
+     "isRequired": true,
+     "placeHolder": {
+      "pt-br": "Insira aqui o motivo da nota escolhida",
+      "default": "Insira aqui o motivo da nota acima"
+     }
+    }
+   ],
+   "questionTitleLocation": "top",
+   "navigationButtonsVisibility": "hide"
+  }
+ ],
+ "cookieName": "ppwnps",
+ "showPrevButton": false,
+ "showPageTitles": false,
+ "showQuestionNumbers": "off",
+ "questionTitlePattern": "numTitle",
+ "questionsOnPageMode": "singlePage"
+}
+
+
+function sendDataToServer(survey) {
+    survey.sendResult('2f6ecd5e-eda8-4f1c-ba7e-edda8177a3e2');
+}
+
+var survey = new Survey.Model(surveyJSON);
+survey.onComplete.add(function (sender){
+const results = JSON.stringify(sender.data);
+      alert(results);
+});
+new Vue({ el: '#surveyContainer', data: { survey: survey } });
+
+        </script>
+  </body>
+</html>
