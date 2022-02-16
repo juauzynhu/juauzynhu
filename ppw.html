@@ -17,14 +17,8 @@
 Survey.StylesManager.applyTheme("orange");
 
 var surveyJSON = {
- "locale": "pt-br",
- "title": {
-  "default": "Avaliação caso %%=QueryParameter('p')=%% - PPW",
-  "pt-br": "Avaliação do atendimento - PPW"
- },
- "description": {
-  "pt-br": "Avalie o atendimento recebido na solução do caso #%%=QueryParameter('c')=%%"
- },
+ "title": "Avaliação caso %%=QueryParameter('c')=%% - PPW",
+ "description": "Avalie o atendimento recebido na solução do caso #%%=QueryParameter('c')=%%",
  "logoPosition": "right",
  "completedHtml": "<b>Agradecemos o seu feedback!</b>",
  "pages": [
@@ -35,10 +29,7 @@ var surveyJSON = {
      "type": "rating",
      "name": "satisfaction",
      "startWithNewLine": false,
-     "title": {
-      "default": "Quão satisfeito você ficou com a solução do caso %%=QueryParameter('p')=%%?",
-      "pt-br": "Quão satisfeito você ficou com a solução do caso #%%=QueryParameter('c')=%%?"
-     },
+     "title": "Quão satisfeito você ficou com a solução do caso %%=QueryParameter('c')=%%?",
      "titleLocation": "top",
      "hideNumber": true,
      "isRequired": true,
@@ -68,6 +59,7 @@ var surveyJSON = {
  "questionTitlePattern": "numTitle",
  "questionsOnPageMode": "singlePage"
 }
+
 
 function sendDataToServer(survey) {
     survey.sendResult('2f6ecd5e-eda8-4f1c-ba7e-edda8177a3e2');
