@@ -68,7 +68,7 @@ function sendDataToServer(survey) {
 
 var survey = new Survey.Model(surveyJSON);
 survey.onComplete.add(function (sender){
-      alert(sender.data);
+      alert(sender.data.reason);
 });
 new Vue({ el: '#surveyContainer', data: { survey: survey } });
 
