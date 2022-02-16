@@ -1,4 +1,23 @@
-{
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NPS - PPW - ID</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://unpkg.com/survey-vue@1.9.13/survey.vue.min.js"></script>
+  <link href="https://unpkg.com/survey-vue@1.9.13/survey.css" type="text/css" rel="stylesheet" />
+  </head>
+<body>
+  <div id="surveyContainer" style="display:inline-block;width:100%;">
+            <survey :survey='survey'/>
+        </div>
+        <div id="surveyResult"></div>
+        <script type="text/javascript">
+Survey.StylesManager.applyTheme("orange");
+
+var surveyJSON = {
  "title": "Avaliação do atendimento - PPW",
  "description": "Avalie o atendimento recebido na solução do caso #%%=QueryParameter('c')=%%",
  "logoPosition": "right",
@@ -48,3 +67,31 @@
  "questionTitlePattern": "numTitle",
  "questionsOnPageMode": "singlePage"
 }
+
+function sendDataToServer(survey, options) {
+  options.showDataSaving();
+  $.ajax({
+    url: 'http://cloud.mail.wizsolucoes.com.br/ppwnpshandler',
+    type: 'post',
+    data: JSON.stringify(survey.data),
+    headers: {
+      "Content-Type": "text/plain"
+    },
+    processData: false,
+    complete: function(res, status) {
+      if (status == 'success') {
+        options.showDataSavingSuccess();
+      }else {
+        options.showDataSavingError();
+      }
+    },
+  });
+}
+
+var survey = new Survey.Model(surveyJSON);
+survey.onComplete.add(sendDataToServer);
+new Vue({ el: '#surveyContainer', data: { survey: survey } });
+
+        </script>
+  </body>
+</html>
