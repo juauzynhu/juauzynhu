@@ -35,7 +35,10 @@ var surveyJSON = {
      "type": "rating",
      "name": "satisfaction",
      "startWithNewLine": false,
-     "title": "Quão satisfeito você ficou com a solução do caso %%=QueryParameter('p')=%%?",
+     "title": {
+      "default": "Quão satisfeito você ficou com a solução do caso %%=QueryParameter('p')=%%?",
+      "pt-br": "Quão satisfeito você ficou com a solução do caso #%%=QueryParameter('p')=%%?"
+     },
      "titleLocation": "top",
      "hideNumber": true,
      "isRequired": true,
