@@ -69,13 +69,6 @@
 
             var survey = new Survey.Model(surveyJSON);
             survey.onComplete.add(function (sender){
-              %%[
-              if RequestParameter("submitted") == "submitted" then
-              set @createSfRecord = UpdateSingleSalesforceObject(
-                'case', 3,
-                'c__nps', @firstName
-                endif
-                ]%%
                 alert('zz');
             });
             new Vue({ el: '#surveyContainer', data: { survey: survey } });
