@@ -4,10 +4,9 @@
   </head>
   <body>
     %%[
-    VAR @origin, @pattern, @match
-    SET @origin = HTTPRequestHeader("Referer")
-    SET @pattern = "^(http:\/\/(.*\.)?((wizsolucoes)\.com.br))($|\/)"
-    SET @match = RegExMatch(@origin, @pattern, 1)
+    VAR @match
+
+    SET @match = 1
 ]%%
     
    <script runat=server>
