@@ -1,8 +1,8 @@
  %%[
     VAR @Satisfaction, @Reason, @id 
-    SET @Satisfaction = RequestParameter("satisfaction")
-    SET @Reason = RequestParameter("reason")
-    SET @id = RequestParameter("id")
+    SET @Satisfaction = QueryParameter("satisfaction")
+    SET @Reason = QueryParameter("reason")
+    SET @id = QueryParameter("id")
     IF @Satisfaction >= 0 THEN
           UpdateSingleSalesforceObject(
             "Case",@id,
