@@ -45,6 +45,8 @@ var surveyJSON = {
      "title": "Qual a razão da escolha?",
      "hideNumber": true,
      "enableIf": "{satisfaction} <= 7",
+     "defaultValue": " .",
+     "clearIfInvisible": "none",
      "isRequired": true,
      "placeHolder": "Insira aqui o motivo da nota escolhida"
     },
@@ -71,7 +73,6 @@ var surveyJSON = {
  "questionTitlePattern": "numTitle",
  "questionsOnPageMode": "singlePage"
 }
-
 function sendDataToServer(survey, options) {
   options.showDataSaving();
   alert(JSON.stringify(survey.data));
