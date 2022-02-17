@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    %%[
+ %%[
     VAR @Satisfaction, @Reason, @id 
     SET @Satisfaction = RequestParameter("satisfaction")
     SET @Reason = RequestParameter("reason")
@@ -14,6 +11,12 @@
       ENDIF
     ENDIF
     ]%%
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amptest</title>
+  </head>
+  <body>
     %%@Satisfaction%%<br>
     %%@Reason%% <br>
     %%@id%%
