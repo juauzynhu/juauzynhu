@@ -11,8 +11,8 @@
     SET @match = RegExMatch(@origin, @pattern, 1)
 ]%%
     
-     <script runat=server>
-      Platform.Load("core","1");
+   <script runat=server>
+    /*  Platform.Load("core","1");
       var MATCH = Variable.GetValue("@match");
       if (!MATCH) { MATCH = null }
       HTTPHeader.SetValue("Access-Control-Allow-Methods","POST");
@@ -22,8 +22,8 @@
       Platform.Response.SetResponseHeader("X-Frame-Options","Deny"); 
       Platform.Response.SetResponseHeader("X-Content-Type-Options","nosniff"); 
       Platform.Response.SetResponseHeader("Referrer-Policy","strict-origin-when-cross-origin"); 
-      Platform.Response.SetResponseHeader("Content-Security-Policy","default-src 'self'");
-    </script>
+      Platform.Response.SetResponseHeader("Content-Security-Policy","default-src 'self'");*/
+    //</script>
     %%[
 
 VAR @Satisfaction, @Reason, @id
