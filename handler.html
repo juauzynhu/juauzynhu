@@ -1,21 +1,14 @@
- %%[
-    VAR @Satisfaction, @Reason, @id 
-    SET @Satisfaction = QueryParameter('satisfaction')
-    SET @Reason = QueryParameter('reason')
-    SET @id = QueryParameter('id')
-    IF @Satisfaction >= 0 THEN
-          UpdateSingleSalesforceObject(
-            'Case',@id,
-            'NPS__c',@Satisfaction
-          )
-     ENDIF
-    ]%%
 <!DOCTYPE html>
 <html>
   <head>
     <title>Amptest fx</title>
   </head>
-  <body>
+  <body> %%[
+    VAR @Satisfaction, @Reason, @id 
+    SET @Satisfaction = QueryParameter('satisfaction')
+    SET @Reason = QueryParameter('reason')
+    SET @id = QueryParameter('id')
+    ]%%
     %%=@Satisfaction=%%<br>
     %%=@Reason=%% <br>
     %%=@id=%%
