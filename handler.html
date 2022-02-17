@@ -27,19 +27,7 @@
 
 VAR @Satisfaction, @Reason, @id
 
-IF LENGTH(@match) > 0 THEN  
-    SET @Satisfaction = RequestParameter("satisfaction")
-    SET @Reason = RequestParameter("reason")
-    SET @id = RequestParameter("id")
 
-    IF @Satisfaction >= 0 THEN
-        UpdateSingleSalesforceObject(
-          "Case",@id,
-          "NPS__c",@Satisfaction
-        )
-    ENDIF
-
-ENDIF
 
 ]%%
   </body>
