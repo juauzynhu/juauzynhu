@@ -86,7 +86,6 @@ function sendDataToServer(survey, options) {
     processData: false,
     complete: function(res, status) {
       if (status == 'success') {
-        alert();
         options.showDataSavingSuccess();
       }else {
         options.showDataSavingError();
