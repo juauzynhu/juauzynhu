@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
   </head>
   <body>
     %%[
@@ -25,22 +24,20 @@
       Platform.Response.SetResponseHeader("Content-Security-Policy","default-src 'self'");*/
     //</script>
     %%[
-
-VAR @Satisfaction, @Reason, @id
-    
+    VAR @Satisfaction, @Reason, @id    
     IF LENGTH(@match) > 0 THEN  
-    SET @Satisfaction = RequestParameter("satisfaction")
-    SET @Reason = RequestParameter("reason")
-    SET @id = RequestParameter("id")
+      SET @Satisfaction = RequestParameter("satisfaction")
+      SET @Reason = RequestParameter("reason")
+      SET @id = RequestParameter("id")
 
-    IF @Satisfaction >= 0 THEN
-        UpdateSingleSalesforceObject(
-          "Case",@id,
-          "NPS__c",@Satisfaction
-        )
+      IF @Satisfaction >= 0 THEN
+          UpdateSingleSalesforceObject(
+            "Case",@id,
+            "NPS__c",@Satisfaction
+          )
+      ENDIF
     ENDIF
-ENDIF
-]%%
+    ]%%
    
   </body>
 </html>
