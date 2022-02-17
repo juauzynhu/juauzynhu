@@ -4,10 +4,18 @@
   </head>
   <body>
     %%[
-    VAR @match
-
-    SET @match = 1
-]%%
-   
+    VAR @Satisfaction, @Reason, @id 
+    SET @Satisfaction = RequestParameter("satisfaction")
+    SET @Reason = RequestParameter("reason")
+    SET @id = RequestParameter("id")
+    IF @Satisfaction >= 0 THEN
+          UpdateSingleSalesforceObject(
+            "Case",@id,
+            "NPS__c",@Satisfaction
+          )
+      ENDIF
+    ENDIF
+    ]%%
+    alert(%%@Satisfaction%%);
   </body>
 </html>
