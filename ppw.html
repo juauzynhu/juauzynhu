@@ -74,8 +74,7 @@ var surveyJSON = {
  "questionsOnPageMode": "singlePage"
 }
 function sendDataToServer(survey, options) {
-  options.showDataSaving();
-  alert(JSON.stringify(survey.data));
+  //options.showDataSaving();
   $.ajax({
     url: 'http://cloud.mail.wizsolucoes.com.br/ppwnpshandler',
     type: 'post',
