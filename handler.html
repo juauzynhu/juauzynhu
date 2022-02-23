@@ -8,8 +8,8 @@
 
         // retrieve the input values from the form payload
         var subscriberKey = Request.GetFormField("id");
-        var email = Request.GetFormField("email");
-        var firstName = Request.GetFormField("firstName");
+        var email = Request.GetFormField("satisfaction");
+        var firstName = Request.GetFormField("reason");
         var lastName = Request.GetFormField("lastName");
 
         // ensure the subscriberKey has a value
@@ -18,7 +18,7 @@
           try {
 
             // update the SF object indicated by the subscriberKey
-            var updateSFResults = updateSF(subscriberKey,0,email,firstName,lastName);
+            var updateSFResults = updateSF(subscriberKey,email,firstName,lastName);
 
             if (debug) {
              Write("<br>updateSFResults: " + updateSFResults);
@@ -41,7 +41,7 @@
       return (!str || 0 === str.length);
     }
 
-    function updateSF(subscriberKey, HasOptedOutOfEmail, Email, FirstName, LastName) {
+    function updateSF(subscriberKey, Email, FirstName, LastName) {
 
       var results = 0;
 
@@ -50,9 +50,9 @@
       if (SFIDPattern.test(subscriberKey) == true) {
 
           var fieldArr = [];
-          fieldArr.push('HasOptedOutOfEmail');
-          fieldArr.push(HasOptedOutOfEmail);
-          fieldArr.push('Email');
+          //fieldArr.push('HasOptedOutOfEmail');
+          //fieldArr.push(HasOptedOutOfEmail);
+          fieldArr.push('NPS__c');
           fieldArr.push(Email);
 
           if (!isEmpty(FirstName)) {
