@@ -1,16 +1,30 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Amptest fx</title>
-  </head>
-  <body> %%[
-    VAR @Satisfaction, @Reason, @id 
-    SET @Satisfaction = QueryParameter('satisfaction')
-    SET @Reason = QueryParameter('reason')
-    SET @id = QueryParameter('id')
-    ]%%
-    %%=v(@Satisfaction)=%%<br>
-    %%=v(@Reason)=%% <br>
-    %%=v(@id)=%%
-  </body>
-</html>
+<script runat="server">
+
+    Platform.Load("core", "1.1.1");
+
+    var referer = String(Platform.Request.ReferrerURL).split("?")[0];
+
+    try {
+      
+      </script>%%[
+      
+        VAR @Satisfaction, @Reason, @id 
+        SET @Satisfaction = QueryParameter('satisfaction')
+        SET @Reason = QueryParameter('reason')
+        SET @id = QueryParameter('id')
+
+        UpdateSingleSalesforceObject('Case', @id, 'NPS__c', @Satisfaction)
+          
+      ]%%<script runat="server">
+        
+    } catch (err) {
+
+      referer += "?error=1&message=" + Stringify(err.message) + Stringify(err.description);
+      Platform.Response.Redirect(referer);
+
+    } finally {
+
+      Platform.Response.Redirect(referer + "?ok=1");
+      
+    }
+</script>
