@@ -94,11 +94,11 @@
           
           var updateSFObject2 = "";
           updateSFObject2 += "\%\%[ ";
-          updateSFObject += "set @SFUpdate2 = CreateSalesforceObject('" + sfObj2 + "',4,";
-          updateSFObject += "'" + fieldArr2.join("','") + "'";
-          updateSFObject += ") ";
-          updateSFObject += "output(concat(@SFUpdate2)) ";
-          updateSFObject += "]\%\%";          
+          updateSFObject2 += "set @SFUpdate2 = CreateSalesforceObject('" + sfObj2 + "',4,";
+          updateSFObject2 += "'" + fieldArr2.join("','") + "'";
+          updateSFObject2 += ") ";
+          updateSFObject2 += "output(concat(@SFUpdate2)) ";
+          updateSFObject2 += "]\%\%";          
           
 
           try {
