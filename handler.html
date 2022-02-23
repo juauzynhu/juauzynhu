@@ -22,11 +22,11 @@
 
     try {
       
-      </script>%%[
+    var updateSFObject = "UpdateSingleSalesforceObject('Case', @id, 'NPS__c', @Satisfaction)";
+    var results = Platform.Function.TreatAsContent(updateSFObject);
 
-        UpdateSingleSalesforceObject('Case', @id, 'NPS__c', @Satisfaction)
-          
-      ]%%<script runat="server">
+
+ 
         
     } catch (err) {
 
