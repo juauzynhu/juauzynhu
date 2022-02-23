@@ -1,25 +1,96 @@
-<script runat="server">
+<script type="text/javascript" runat="server">
 
-    Platform.Load("core", "1.1.1");
+    Platform.Load("core", "1");
+    var debug = 1;
 
-    var referer = String(Platform.Request.ReferrerURL).split("?")[0];
+    // detect form submission 
+    if (Request.Method == "POST") {
 
-    try {
-      
-    var updateSFObject = "%%[VAR @Satisfaction, @Reason, @id SET @Satisfaction = RequestParameter('satisfaction') SET @Reason = RequestParameter('reason') SET @id = RequestParameter('id') UpdateSingleSalesforceObject('Case', @id, 'NPS__c', @Satisfaction)]%%";
-    var results = Platform.Function.TreatAsContent(updateSFObject);
+        // retrieve the input values from the form payload
+        var subscriberKey = Request.GetFormField("subscriberKey");
+        var email = Request.GetFormField("email");
+        var firstName = Request.GetFormField("firstName");
+        var lastName = Request.GetFormField("lastName");
+
+        // ensure the subscriberKey has a value
+        if (!isEmpty(subscriberKey)) {
+
+          try {
+
+            // update the SF object indicated by the subscriberKey
+            var updateSFResults = updateSF(subscriberKey,0,email,firstName,lastName);
+
+            if (debug) {
+             Write("<br>updateSFResults: " + updateSFResults);
+            }
+
+          } catch (e1) {
+
+              if (debug) {
+                 Write("<br>e1: " + Stringify(e1));
+              }
+
+          } // of catch
+
+        } // of sk check
+
+    } // of post
 
 
- 
-        
-    } catch (err) {
+    function isEmpty(str) {
+      return (!str || 0 === str.length);
+    }
 
-      referer += "?error=1&message=" + Stringify(err.message) + Stringify(err.description);
-      Platform.Response.Redirect(referer);
+    function updateSF(subscriberKey, HasOptedOutOfEmail, Email, FirstName, LastName) {
 
-    } finally {
+      var results = 0;
 
-      Platform.Response.Redirect(referer + "?ok=1");
-      
+      var SFIDPattern = new RegExp("^[a-zA-Z0-9]{18}");
+
+      if (SFIDPattern.test(subscriberKey) == true) {
+
+          var fieldArr = [];
+          fieldArr.push('HasOptedOutOfEmail');
+          fieldArr.push(HasOptedOutOfEmail);
+          fieldArr.push('Email');
+          fieldArr.push(Email);
+
+          if (!isEmpty(FirstName)) {
+            fieldArr.push('FirstName');
+            fieldArr.push(FirstName);
+          }
+
+          if (!isEmpty(LastName)) {
+            fieldArr.push('LastName');
+            fieldArr.push(LastName);
+          }
+
+          // detect Contact or Lead
+          var sfObj = subscriberKey.substring(0,3) == "003" ? "Contact" : "Lead";
+
+          var updateSFObject = "";
+          updateSFObject += "\%\%[ ";
+          updateSFObject += "set @SFUpdateResults = UpdateSingleSalesforceObject('" + sfObj + "',";
+          updateSFObject += "'" + subscriberKey + "','"+  fieldArr.join("','") + "'";
+          updateSFObject += ") ";
+          updateSFObject += "output(concat(@SFUpdateResults)) ";
+          updateSFObject += "]\%\%";
+
+          try {
+
+            results = Platform.Function.TreatAsContent(updateSFObject);
+
+          } catch (e2) {
+
+              if (debug) {
+                  Write("<br>e2: " + Stringify(e2));
+              }
+
+          }
+
+      }
+
+      return results
     }
 </script>
+<!-- YOUR HTML AND FORM GOES HERE -->
