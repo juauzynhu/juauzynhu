@@ -5,9 +5,9 @@
   </head>
   <body> %%[
     VAR @Satisfaction, @Reason, @id 
-    SET @Satisfaction = QueryParameter('satisfaction')
-    SET @Reason = QueryParameter('reason')
-    SET @id = QueryParameter('id')
+        SET @Satisfaction = RequestParameter('satisfaction')
+        SET @Reason = RequestParameter('reason')
+        SET @id = RequestParameter('id')
     ]%%
     %%=v(@Satisfaction)=%%<br>
     %%=v(@Reason)=%% <br>
@@ -23,11 +23,6 @@
     try {
       
       </script>%%[
-      
-        VAR @Satisfaction, @Reason, @id 
-        SET @Satisfaction = RequestParameter('satisfaction')
-        SET @Reason = RequestParameter('reason')
-        SET @id = RequestParameter('id')
 
         UpdateSingleSalesforceObject('Case', @id, 'NPS__c', @Satisfaction)
           
