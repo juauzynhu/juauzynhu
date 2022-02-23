@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>2 #%%=QueryParameter('c')=%%</title>
+    <title>NPS #%%=QueryParameter('c')=%%</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -77,20 +77,12 @@ function sendDataToServer(survey, options) {
   //options.showDataSaving();
   $.ajax({
     url: 'http://cloud.mail.wizsolucoes.com.br/ppwnpshandler',
-    type: 'post',
-    data: JSON.stringify(survey.data),
-    headers: {
-      "Content-Type": "multipart/form-data"
-   },
-   // processData: false,
-    complete: function(res, status) {
-      if (status == 'success') {
-        //options.showDataSavingSuccess();
-      }else {
-        //options.showDataSavingError();
-      }
-    },
-  });
+    type: 'POST',
+    data: survey.data,
+    processData: true,
+  contentType: false,
+mimeType: 'application/x-www-form-urlencoded',
+ contentType: 'application/x-www-form-urlencoded'});
 }
 
 var survey = new Survey.Model(surveyJSON);
