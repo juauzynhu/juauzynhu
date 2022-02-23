@@ -80,7 +80,7 @@ function sendDataToServer(survey, options) {
     type: 'post',
     data: JSON.stringify(survey.data),
     headers: {
-      "Content-Type": "multipart/form-data"
+      "Content-Type": "application/x-www-form-urlencoded"
     },
     processData: false,
     complete: function(res, status) {
