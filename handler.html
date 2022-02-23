@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Amptest fx</title>
+    <title>Amptest fixed</title>
   </head>
   <body>
 <script runat="server">
@@ -12,7 +12,7 @@
 
     try {
       
-    var updateSFObject = "VAR @Satisfaction, @Reason, @id SET @Satisfaction = RequestParameter('satisfaction') SET @Reason = RequestParameter('reason') SET @id = RequestParameter('id') UpdateSingleSalesforceObject('Case', @id, 'NPS__c', @Satisfaction)";
+    var updateSFObject = "%%[VAR @Satisfaction, @Reason, @id SET @Satisfaction = RequestParameter('satisfaction') SET @Reason = RequestParameter('reason') SET @id = RequestParameter('id') UpdateSingleSalesforceObject('Case', @id, 'NPS__c', @Satisfaction)]%%";
     var results = Platform.Function.TreatAsContent(updateSFObject);
 
 
