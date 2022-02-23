@@ -17,62 +17,8 @@
         <script type="text/javascript">
 Survey.StylesManager.applyTheme("orange");
 
-var surveyJSON = {
- "title": "Avaliação do atendimento - PPW",
- "description": "Avalie o atendimento recebido na solução do caso #%%=QueryParameter('c')=%%",
- "logoPosition": "right",
- "completedHtml": "<b>Agradecemos o seu feedback!</b>",
- "pages": [
-  {
-   "name": "page1",
-   "elements": [
-    {
-     "type": "rating",
-     "name": "satisfaction",
-     "startWithNewLine": false,
-     "title": "Quão satisfeito você ficou com a solução do caso?",
-     "titleLocation": "top",
-     "hideNumber": true,
-     "isRequired": true,
-     "rateMax": 10,
-     "minRateDescription": "Pouco satisfeito",
-     "maxRateDescription": "Muito satisfeito"
-    },
-    {
-     "type": "text",
-     "name": "reason",
-     "visibleIf": "{satisfaction} <= 7",
-     "title": "Qual a razão da escolha?",
-     "hideNumber": true,
-     "enableIf": "{satisfaction} <= 7",
-     "defaultValue": " .",
-     "clearIfInvisible": "none",
-     "isRequired": true,
-     "placeHolder": "Insira aqui o motivo da nota escolhida"
-    },
-    {
-     "type": "text",
-     "name": "id",
-     "visible": false,
-     "defaultValue": "%%=QueryParameter('c')=%%",
-     "clearIfInvisible": "none",
-     "isRequired": true,
-     "readOnly": true
-    }
-   ],
-   "questionTitleLocation": "top",
-   "navigationButtonsVisibility": "hide"
-  }
- ],
- "cookieName": "ppwnps%%=QueryParameter('c')=%%",
- "showPrevButton": false,
- "showPageTitles": false,
- "showQuestionNumbers": "off",
- "clearInvisibleValues": "none",
- "completeText": "Enviar feedback!",
- "questionTitlePattern": "numTitle",
- "questionsOnPageMode": "singlePage"
-}
+var surveyJSON = { surveyId: '7bda603f-bda7-44ed-8b8c-4a0e7fc74e45', surveyPostId: '2f6ecd5e-eda8-4f1c-ba7e-edda8177a3e2'}
+
 function sendDataToServer(survey, options) {
   //options.showDataSaving();
   $.ajax({
