@@ -76,7 +76,7 @@ var surveyJSON = {
 function sendDataToServer(survey, options) {
   //options.showDataSaving();
   $.ajax({
-    url: 'http://cloud.mail.wizsolucoes.com.br/ppwnpshandler',
+    url: '%%=CloudPagesURL(3532)=%%',
     type: 'POST',
     data: survey.data,
     processData: true,
