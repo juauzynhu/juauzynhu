@@ -7,18 +7,18 @@
     if (Request.Method == "POST") {
 
         // retrieve the input values from the form payload
-        var subscriberKey = Request.GetFormField("id");
+        var caseId = Request.GetFormField("id");
         var email = Request.GetFormField("satisfaction");
-        var firstName = Request.GetFormField("reason");
+        var reason = Request.GetFormField("reason");
         var lastName = Request.GetFormField("lastName");
 
         // ensure the subscriberKey has a value
-        if (!isEmpty(subscriberKey)) {
+        if (!isEmpty(caseId)) {
 
           try {
 
             // update the SF object indicated by the subscriberKey
-            var updateSFResults = updateSF(subscriberKey,email,firstName,lastName);
+            var updateSFResults = updateSF(caseId,email,reason,lastName);
 
             if (debug) {
              Write("<br>updateSFResults: " + updateSFResults);
@@ -41,44 +41,70 @@
       return (!str || 0 === str.length);
     }
 
-    function updateSF(subscriberKey, Email, FirstName, LastName) {
+    function updateSF(caseId, satisfaction, reason, LastName) {
 
-      var results = 0;
+      var results1 = 0;
 
       var SFIDPattern = new RegExp("^[a-zA-Z0-9]{18}");
 
-      if (SFIDPattern.test(subscriberKey) == true) {
+      if (SFIDPattern.test(caseId) == true) {
 
           var fieldArr = [];
           //fieldArr.push('HasOptedOutOfEmail');
           //fieldArr.push(HasOptedOutOfEmail);
           fieldArr.push('NPS__c');
-          fieldArr.push(Email);
+          fieldArr.push(satisfaction);
 
-          if (!isEmpty(FirstName)) {
+          /*if (!isEmpty(FirstName)) {
             fieldArr.push('FirstName');
-            fieldArr.push(FirstName);
+            fieldArr.push(reason);
           }
 
           if (!isEmpty(LastName)) {
             fieldArr.push('LastName');
             fieldArr.push(LastName);
-          }
+          }*/
+          
+          var fieldArr2 = [];
+          fieldArr2.push('CaseId__c');
+          fieldArr2.push(caseId);
+          
+          fieldArr2.push('recordTypeId');
+          fieldArr2.push('0122H000000kwsBQAQ'); // recordType
+          
+          fieldArr2.push('RequestClassification__c');
+          fieldArr2.push('Motivo da nota');
+          
+          fieldArr2.push('Annotation__c');
+          fieldArr2.push(reason);         
+          
 
           // detect Contact or Lead
           var sfObj = "Case";//subscriberKey.substring(0,3) == "003" ? "Contact" : "Lead";
+          var sfObj2 = "InteractionControl__c"
 
           var updateSFObject = "";
           updateSFObject += "\%\%[ ";
           updateSFObject += "set @SFUpdateResults = UpdateSingleSalesforceObject('" + sfObj + "',";
-          updateSFObject += "'" + subscriberKey + "','"+  fieldArr.join("','") + "'";
+          updateSFObject += "'" + caseId + "','"+  fieldArr.join("','") + "'";
           updateSFObject += ") ";
           updateSFObject += "output(concat(@SFUpdateResults)) ";
           updateSFObject += "]\%\%";
+          
+          var updateSFObject2 = "";
+          updateSFObject2 += "\%\%[ ";
+          updateSFObject += "set @SFUpdate2 = CreateSalesforceObject('" + sfObj2 + "',4,";
+          updateSFObject += "'" + fieldArr2.join("','") + "'";
+          updateSFObject += ") ";
+          updateSFObject += "output(concat(@SFUpdate2)) ";
+          updateSFObject += "]\%\%";          
+          
 
           try {
 
-            results = Platform.Function.TreatAsContent(updateSFObject);
+            results1 = Platform.Function.TreatAsContent(updateSFObject);
+            results2 = Platform.Function.TreatAsContent(updateSFObject2);
+              
 
           } catch (e2) {
 
@@ -90,7 +116,7 @@
 
       }
 
-      return results
+      return results2
     }
 </script>
 <!-- YOUR HTML AND FORM GOES HERE -->
