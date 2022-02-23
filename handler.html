@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amptest fx</title>
+  </head>
+  <body> %%[
+    VAR @Satisfaction, @Reason, @id 
+    SET @Satisfaction = QueryParameter('satisfaction')
+    SET @Reason = QueryParameter('reason')
+    SET @id = QueryParameter('id')
+    ]%%
+    %%=v(@Satisfaction)=%%<br>
+    %%=v(@Reason)=%% <br>
+    %%=v(@id)=%%
+
+
 <script runat="server">
 
     Platform.Load("core", "1.1.1");
@@ -28,3 +44,5 @@
       
     }
 </script>
+        </body>
+</html>
