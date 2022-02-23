@@ -7,18 +7,18 @@
     if (Request.Method == "POST") {
 
         // retrieve the input values from the form payload
-        var subscriberKey = Request.GetFormField("subscriberKey");
+        var id = Request.GetFormField("id");
         var email = Request.GetFormField("email");
         var firstName = Request.GetFormField("firstName");
         var lastName = Request.GetFormField("lastName");
 
         // ensure the subscriberKey has a value
-        if (!isEmpty(subscriberKey)) {
+        if (!isEmpty(id) {
 
           try {
 
             // update the SF object indicated by the subscriberKey
-            var updateSFResults = updateSF(subscriberKey,0,email,firstName,lastName);
+            var updateSFResults = updateSF(id,satisfaction,reason);
 
             if (debug) {
              Write("<br>updateSFResults: " + updateSFResults);
@@ -41,37 +41,37 @@
       return (!str || 0 === str.length);
     }
 
-    function updateSF(subscriberKey, HasOptedOutOfEmail, Email, FirstName, LastName) {
+    function updateSF(id, satisfaction, reason) {
 
       var results = 0;
 
       var SFIDPattern = new RegExp("^[a-zA-Z0-9]{18}");
 
-      if (SFIDPattern.test(subscriberKey) == true) {
+      if (SFIDPattern.test(id) == true) {
 
           var fieldArr = [];
-          fieldArr.push('HasOptedOutOfEmail');
-          fieldArr.push(HasOptedOutOfEmail);
-          fieldArr.push('Email');
-          fieldArr.push(Email);
+          fieldArr.push('satisfaction');
+          fieldArr.push(satisfaction);
+          //fieldArr.push('reason');
+          //fieldArr.push(reason);
 
-          if (!isEmpty(FirstName)) {
+         /* if (!isEmpty(FirstName)) {
             fieldArr.push('FirstName');
             fieldArr.push(FirstName);
-          }
+          }*/
 
-          if (!isEmpty(LastName)) {
+          /*if (!isEmpty(LastName)) {
             fieldArr.push('LastName');
             fieldArr.push(LastName);
-          }
+          }*/
 
           // detect Contact or Lead
-          var sfObj = subscriberKey.substring(0,3) == "003" ? "Contact" : "Lead";
+          var sfObj = "Case"//subscriberKey.substring(0,3) == "003" ? "Contact" : "Lead";
 
           var updateSFObject = "";
           updateSFObject += "\%\%[ ";
           updateSFObject += "set @SFUpdateResults = UpdateSingleSalesforceObject('" + sfObj + "',";
-          updateSFObject += "'" + subscriberKey + "','"+  fieldArr.join("','") + "'";
+          updateSFObject += "'" + id;// + "','"+  fieldArr.join("','") + "'";
           updateSFObject += ") ";
           updateSFObject += "output(concat(@SFUpdateResults)) ";
           updateSFObject += "]\%\%";
