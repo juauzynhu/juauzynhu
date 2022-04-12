@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
-  <meta name="version" content="0.6"/>
+  <meta name="version" content="0.7"/>
   </head>
   <body>
     %%[
@@ -29,6 +29,13 @@ IF RequestParameter("submitted") == true THEN
     "LastName", RequestParameter("lastname"),
     "PersonEmail", RequestParameter("email")
     )
+    ELSE
+    /* create a new lead */
+    SET @leadId = CreateSalesforceObject(
+    "Account", 3,
+    "FirstName", RequestParameter("firstname"),
+    "LastName", RequestParameter("lastname"),
+    "PersonEmail", RequestParameter("email"))
 
    ENDIF
   
@@ -42,12 +49,12 @@ IF RequestParameter("submitted") == true THEN
     <table style="padding: 20px;">
       <tr>
         <td>
-          <h2>Please fill in the form: v0.6</h2>
+          <h2>Please fill in the form: v0.7</h2>
           <form action="%%=RequestParameter('PAGEURL')=%%" method="post">
             <label>CPF: </label><input type="text" name="cpf" required=""><br>
             <label>First name: </label><input type="text" name="firstname" required=""><br>
             <label>Last name: </label><input type="text" name="lastname" required=""><br>
-            <label>Email: </label><input type="text" name="email" required=""><br>
+            <label>Email: </label><input type="email" name="email" required=""><br>
             <input name="submitted" type="hidden" value="true"><br>
             <input type="submit" value="Submit">
           </form>
