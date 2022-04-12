@@ -1,0 +1,62 @@
+<html>
+  <head>
+    
+  </head>
+  <body>
+    %%[
+IF RequestParameter("submitted") == true THEN
+
+  /* check if lead already exists */
+  SET @subscriberRows = RetrieveSalesforceObjects(
+   "Account",
+   "Id,PersonEmail","FirstName","IdentificationNumber__c",
+   "IdentificationNumber__c", "=", RequestParameter("cpf")
+   )
+  
+  /* get lead id if lead exists */
+  IF RowCount(@subscriberRows) > 0 THEN 
+  SET @leadId = Field(Row(@subscriberRows, 1), "Id")
+  
+  /* update existing lead */
+  SET @updateRecord = UpdateSingleSalesforceObject(
+      "Account", @leadId,
+      "FirstName", RequestParameter("firstname"),
+      "LastName", RequestParameter("lastname"),
+      "PersonEmail", RequestParameter("email")
+     )
+           
+  ELSE
+   /* create a new lead */
+  SET @leadId = CreateSalesforceObject(
+        "Account", 3,
+        "FirstName", RequestParameter("firstname"),
+        "LastName", RequestParameter("lastname"),
+        "PersonEmail", RequestParameter("email")
+       )       
+   
+  ENDIF
+  
+]%% 
+<h2>Thank you for submitting the form, you will get a confirmation email shortly.</h2>
+
+%%[ ELSE ]%%
+
+    <table style="padding: 20px;">
+      <tr>
+        <td>
+          <h2>Please fill in the form:</h2>
+          <form action="%%=RequestParameter('PAGEURL')=%%" method="post">
+            <label>CPF: </label><input type="text" name="cpf" required=""><br>
+            <label>First name: </label><input type="text" name="firstname" required=""><br>
+            <label>Last name: </label><input type="text" name="lastname" required=""><br>
+            <label>Email: </label><input type="text" name="email" required=""><br>
+            <input name="submitted" type="hidden" value="true"><br>
+            <input type="submit" value="Submit">
+          </form>
+        </td>
+      </tr>
+    </table>
+
+%%[ ENDIF ]%%
+  </body>
+</html>
