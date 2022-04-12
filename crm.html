@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
-  <meta name="version" content="0.3"/>
+  <meta name="version" content="0.4"/>
   </head>
   <body>
     %%[
@@ -39,6 +39,8 @@ IF RequestParameter("submitted") == true THEN
   
 ]%% 
 <h2>Thank you for submitting the form, you will get a confirmation email shortly.</h2>
+    <p>Lead ID= %%=v(@leadId)=%%</p>
+    <p>subscriberRows= %%=v(@subscriberRows)=%%</p>
 
 %%[ ELSE ]%%
 
