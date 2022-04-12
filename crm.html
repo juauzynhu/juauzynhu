@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
-  <meta name="version" content="0.7"/>
+  <meta name="version" content="0.8"/>
   </head>
   <body>
     %%[
@@ -19,7 +19,7 @@ IF RequestParameter("submitted") == true THEN
 
   /* get lead id if lead exists */
   IF RowCount(@subscriberRows) > 0 THEN 
-    SET @row = Row(@subscriberRows, 1)
+    SET @row = RequestParameter("email")
     SET @leadId = Field(Row(@subscriberRows, 1), "Id")
 
     /* update existing lead */
@@ -49,7 +49,7 @@ IF RequestParameter("submitted") == true THEN
     <table style="padding: 20px;">
       <tr>
         <td>
-          <h2>Please fill in the form: v0.7</h2>
+          <h2>Please fill in the form: v0.8</h2>
           <form action="%%=RequestParameter('PAGEURL')=%%" method="post">
             <label>CPF: </label><input type="text" name="cpf" required=""><br>
             <label>First name: </label><input type="text" name="firstname" required=""><br>
