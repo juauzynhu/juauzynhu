@@ -12,7 +12,7 @@ IF RequestParameter("submitted") == true THEN
   /* check if lead already exists */
   SET @subscriberRows = RetrieveSalesforceObjects(
    "Account",
-   "Id,PersonEmail","FirstName","IdentificationNumber__c",
+   "Id",PersonEmail","FirstName","IdentificationNumber__c",
    "IdentificationNumber__c", "=", RequestParameter("cpf")
    )
   
