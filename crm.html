@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
-  <meta name="version" content="0.1"/>
+  <meta name="version" content="0.2"/>
   </head>
   <body>
     %%[
@@ -12,35 +12,30 @@ IF RequestParameter("submitted") == true THEN
 
   /* check if lead already exists */
   SET @subscriberRows = RetrieveSalesforceObjects(
-   "Account",
-   "Id","PersonEmail","FirstName","IdentificationNumber__c",
-   "IdentificationNumber__c", "=", RequestParameter("cpf")
-   )
-  
+  "Account",
+  "Id","PersonEmail","FirstName","IdentificationNumber__c",
+  "IdentificationNumber__c", "=", RequestParameter("cpf")
+  )
+
   /* get lead id if lead exists */
   IF RowCount(@subscriberRows) > 0 THEN 
-  SET @leadId = Field(Row(@subscriberRows, 1), "Id")
-  
-  /* update existing lead */
-  SET @updateRecord = UpdateSingleSalesforceObject(
-      "Account", @leadId,
-      "FirstName", RequestParameter("firstname"),
-      "LastName", RequestParameter("lastname"),
-      "PersonEmail", RequestParameter("email")
-     )
-    
-    ENDIF
-           
+    SET @leadId = Field(Row(@subscriberRows, 1), "Id")
+
+    /* update existing lead */
+    SET @updateRecord = UpdateSingleSalesforceObject(
+    "Account", @leadId,
+    "FirstName", RequestParameter("firstname"),
+    "LastName", RequestParameter("lastname"),
+    "PersonEmail", RequestParameter("email")
+    )
   ELSE
-   /* create a new lead */
-  SET @leadId = CreateSalesforceObject(
-        "Account", 3,
-        "FirstName", RequestParameter("firstname"),
-        "LastName", RequestParameter("lastname"),
-        "PersonEmail", RequestParameter("email")
-       )       
-   
-  ENDIF
+    /* create a new lead */
+    SET @leadId = CreateSalesforceObject(
+    "Account", 3,
+    "FirstName", RequestParameter("firstname"),
+    "LastName", RequestParameter("lastname"),
+    "PersonEmail", RequestParameter("email"))
+   ENDIF
   
 ]%% 
 <h2>Thank you for submitting the form, you will get a confirmation email shortly.</h2>
