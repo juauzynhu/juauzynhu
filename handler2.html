@@ -20,11 +20,15 @@
         var data = Platform.Request.GetPostData();
 
         var parsed = Platform.Function.ParseJSON(data);
+	    
+	var updateObject = {
+		CustomerKey: '010303_02_Seguro_Residencial_RunOff_teste',
+		Properties: formatProps(parsed)
+	};
+	    
+	var options = {SaveOptions:[{'PropertyName':'*',SaveAction:'UpdateAdd'}]};
 
-        var req = proxy.createItem('DataExtensionObject', {
-            CustomerKey: "010303_02_Seguro_Residencial_RunOff_teste",
-            Properties: formatProps(parsed)
-        });
+        var req = proxy.updateItem('DataExtensionObject', updateObject, options);
 
         var res = req.Results[0],
             message = "";
