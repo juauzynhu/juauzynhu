@@ -4,11 +4,6 @@
   <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 </head>
 <body>
-%%[
-    SET @origin = HTTPRequestHeader("Referer")
-    SET @pattern = "^(https:\/\/(.*\.)?((example)\.com))($|\/)"
-    SET @match = RegExMatch(@origin, @pattern, 1)
-]%%
 <script runat='server'>
 
     Platform.Load('core', '1.1.1');
