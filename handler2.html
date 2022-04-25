@@ -14,12 +14,20 @@
 
     try {
 
+	var req = proxy.retrieve("DataExtension", ["CustomerKey"], {
+			Property: "Name",
+			SimpleOperator: "equals",
+			Value: '010303_02_Seguro_Residencial_RunOff_teste'
+		});
+
+	var customerKey = req.Results[0].CustomerKey;
+	    
         var data = Platform.Request.GetPostData();
 
         var parsed = Platform.Function.ParseJSON(data);
 	    
 	var updateObject = {
-		CustomerKey: '010303_02_Seguro_Residencial_RunOff_teste',
+		CustomerKey: customerKey,
 		Properties: formatProps(parsed)
 	};
 	    
