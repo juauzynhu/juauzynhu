@@ -9,34 +9,51 @@
     SET @pattern = "^(https:\/\/(.*\.)?((example)\.com))($|\/)"
     SET @match = RegExMatch(@origin, @pattern, 1)
 ]%%
-<script runat=server>
-    Platform.Load("core","1");
-    var MATCH = Variable.GetValue("@match");
-    if (!MATCH) { MATCH = null }
-    HTTPHeader.SetValue("Access-Control-Allow-Methods","POST");
-    HTTPHeader.SetValue("Access-Control-Allow-Origin",MATCH);
-    Platform.Response.SetResponseHeader("Strict-Transport-Security","max-age=200"); 
-	Platform.Response.SetResponseHeader("X-XSS-Protection","1; mode=block"); 
-	Platform.Response.SetResponseHeader("X-Frame-Options","Deny"); 
-	Platform.Response.SetResponseHeader("X-Content-Type-Options","nosniff"); 
-	Platform.Response.SetResponseHeader("Referrer-Policy","strict-origin-when-cross-origin"); 
-	Platform.Response.SetResponseHeader("Content-Security-Policy","default-src 'self'");
+<script runat='server'>
+
+    Platform.Load('core', '1.1.1');
+
+    var proxy = new Script.Util.WSProxy();
+
+    try {
+
+        var data = Platform.Request.GetPostData();
+
+        var parsed = Platform.Function.ParseJSON(data);
+
+        var req = proxy.createItem('DataExtensionObject', {
+            Name: "Emails",
+            Properties: formatProps(parsed)
+        });
+
+        var res = req.Results[0],
+            message = "";
+
+        if(req.Status != 'OK') {
+            message = res.ErrorMessage;
+        } else {
+            message = res.StatusMessage;
+        }
+
+        Write(Stringify({ Status: req.Status, Message: message }));
+
+    } catch(err) {
+
+        Write(Stringify({ Status: 'Error', Message: err }));
+
+    }
+
+    function formatProps(data) {
+        var arr = [];
+        for (k in data) {
+            arr.push({
+                Name: k,
+                Value: data[k]
+            });
+        }
+        return arr;
+    }
+
 </script>
-%%[
-
-VAR @Name    
-
-IF LENGTH(@match) > 0 THEN  
-
-    SET @Name = RequestParameter("Name")
-
-    IF NOT EMPTY(@Name) THEN
-        Redirect(CONCAT(CloudPagesURL(1970,'Success',1,'Name',@Name)))
-    ENDIF
-
-ENDIF
-
-]%%
-
-</body>
+	</body>
 </html>
